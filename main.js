@@ -10,14 +10,9 @@ function computerPlay() {
     }
 }
 
-function userPlay() {
-    let play = window.prompt("Please select Rock, Paper, or Scissors!");
-    return play;
-}
-
-function gameRound() {
+function gameRound(play) {
     let computerPlayResult = computerPlay().toLowerCase();
-    let userPlayResult = userPlay().toLowerCase();
+    let userPlayResult = play;
 
     if (computerPlayResult === userPlayResult) {
         return "It's a tie! You both chose the same move!";
@@ -47,21 +42,80 @@ function gameRound() {
 
 function game() {
     let userScore = 0;
+    let userScoreRow = document.getElementById("user-score");
+
     let computerScore = 0;
+    let computerScoreRow = document.getElementById("computer-score");
 
     let result = '';
 
-    while (userScore < 5 & computerScore < 5) {
-        result = gameRound();
+    let rockButton = document.querySelector("#rock");
+    let paperButton = document.querySelector("#paper");
+    let scissorsButton = document.querySelector("#scissors");
+
+    rockButton.addEventListener('click', () => {
+        result = gameRound('rock');
+
+        window.alert(result);
+
         if (result.split('!')[0] === 'You win') {
             userScore++;
+            userScoreRow.innerHTML = userScore;
         } else if (result.split('!')[0] === 'You lose') {
             computerScore++;
+            computerScoreRow.innerHTML = computerScore;
         }
-        window.alert(result);
-        window.alert(`User Score: ${userScore} \nComputer Score: ${computerScore}`);
-    }
 
+        if (userScore > 4 || computerScore > 4) {
+            window.alert("Game over!");
+
+            computerScore = 0;
+            computerScoreRow.innerHTML = 0;
+
+            userScore = 0;
+            userScoreRow.innerHTML = 0;
+        }
+    });
+
+    paperButton.addEventListener('click', () => {
+        result = gameRound('paper');
+
+        window.alert(result);
+
+        if (result.split('!')[0] === 'You win') {
+            userScore++;
+            userScoreRow.innerHTML = userScore;
+        } else if (result.split('!')[0] === 'You lose') {
+            computerScore++;
+            computerScoreRow.innerHTML = computerScore;
+        }
+
+        if (userScore > 4 || computerScore > 4) {
+            window.alert("Game over!");
+            computerScoreRow.innerHTML = 0;
+            userScoreRow.innerHTML = 0;
+        }
+    });
+
+    scissorsButton.addEventListener('click', () => {
+        result = gameRound('scissors');
+
+        window.alert(result);
+
+        if (result.split('!')[0] === 'You win') {
+            userScore++;
+            userScoreRow.innerHTML = userScore;
+        } else if (result.split('!')[0] === 'You lose') {
+            computerScore++;
+            computerScoreRow.innerHTML = computerScore;
+        }
+
+        if (userScore > 4 || computerScore > 4) {
+            window.alert("Game over!");
+            computerScoreRow.innerHTML = 0;
+            userScoreRow.innerHTML = 0;
+        }
+    });
 }
 
 game();
